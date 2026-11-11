@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MKT-Fanpage — quản lý, phân loại và theo dõi Facebook group.">
+  <title>MKT-Fanpage · Group Registry</title>
+    <link rel="stylesheet" href="./styles.css?v=content-performance-v227-20261108">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <div><strong>MKT-Fanpage</strong><small>Content Operations</small></div>
+      </div>
+
+      <nav class="main-nav" aria-label="Điều hướng chính">
+        <a href="#dashboard" class="nav-item active"><span aria-hidden="true">◫</span>Tổng quan</a>
+        <div class="sidebar-tabs" aria-label="Các bước trong Tổng quan">
+          <a href="#dashboard" class="sidebar-tab active">Chỉ số tổng quan</a>
+          <a href="#batch-prep" class="sidebar-tab">Chuẩn bị lô</a>
+          <a href="#batch-registry" class="sidebar-tab">Đăng ký lô</a>
+          <a href="#batch-schedule" class="sidebar-tab">Lịch đăng lô</a>
+          <a href="#content-library" class="sidebar-tab">Thư viện nội dung</a>
+          <a href="#batch-queue-draft" class="sidebar-tab">Tạo hàng đợi nháp</a>
+          <a href="#batch-review-queue" class="sidebar-tab">Rà soát trước khi đăng</a>
+          <a href="#batch-status-tracking" class="sidebar-tab">Theo dõi trạng thái duyệt</a>
+          <a href="#posting-queue" class="sidebar-tab">Hàng đợi đăng bài</a>
+          <a href="#analytics" class="sidebar-tab">Phân tích hiệu quả</a>
+          <a href="#batch-decisions" class="sidebar-tab">Quyết định lô tiếp theo</a>
+          <a href="#audit-log" class="sidebar-tab">Nhật ký thao tác</a>
+          <a href="#routing" class="sidebar-tab">Phân loại &amp; điều phối</a>
+          <a href="#groups" class="sidebar-tab">Danh sách group</a>
+        </div>
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+      <div class="phase-card">
+        <span>Giai đoạn 1</span>
+        <strong>Group Registry</strong>
+        <p>Chuẩn hóa dữ liệu trước khi xây hàng đợi đăng bài.</p>
+      </div>
+      <div class="local-status"><i></i>Dữ liệu đang lưu trên trình duyệt</div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">TRUNG TÂM VẬN HÀNH</p>
+          <h1>Group Registry</h1>
+          <p class="page-subtitle">Một nguồn dữ liệu duy nhất cho toàn bộ Facebook group của anh.</p>
+        </div>
+        <div class="topbar-actions">
+          <button type="button" class="button secondary" id="importButton">Nhập CSV · lọc trùng</button>
+          <button type="button" class="button secondary" id="exportButton">Xuất CSV</button>
+          <button type="button" class="button secondary" id="backupButton">Tải bản sao lưu</button>
+          <button type="button" class="button secondary" id="migrateOnlineButton">Chuyển dữ liệu GĐ1 lên online</button>
+          <button type="button" class="button secondary" id="refreshOnlineButton">Tải lại dữ liệu online</button>
+          <button type="button" class="button secondary" id="createLocalSnapshotButton">Chụp dữ liệu cục bộ</button>
+          <button type="button" class="button secondary" id="onlineBackupButton">Lưu sao lưu online</button>
+          <button type="button" class="button secondary" id="restoreOnlineButton">Khôi phục online</button>
+          <button type="button" class="button secondary" id="restoreButton">Khôi phục bản sao lưu</button>
+          <button type="button" class="button secondary" id="restoreLocalSnapshotButton" disabled>Khôi phục bản chụp cục bộ</button>
+          <button type="button" class="button secondary" id="deleteLocalSnapshotButton" disabled>Xóa bản chụp cục bộ</button>
+          <button type="button" class="button danger" id="clearOperationalDataButton">Xóa dữ liệu vận hành</button>
+          <span id="backupStatus" class="sync-status" role="status" aria-live="polite">Sao lưu: chưa chạy</span>
+          <span id="sessionStatus" class="session-status" role="status" aria-live="polite">Đang kiểm tra phiên...</span>
+          <span id="syncOverview" class="sync-overview" role="status" aria-live="polite">Đang kiểm tra đồng bộ...</span>
+          <button type="button" class="button primary" id="addButton">+ Thêm group</button>
+          <input type="file" id="fileInput" accept=".csv,text/csv" hidden>
+          <input type="file" id="backupFileInput" accept=".json,application/json" hidden>
+          <input type="file" id="migrationFileInput" accept=".json,application/json" hidden>
+        </div>
+      </header>
+
+      <section class="drive-panel" aria-label="Kho lưu trữ Google Drive">
+        <div>
+          <span class="drive-panel-label">GOOGLE DRIVE</span>
+          <strong>Kho lưu trữ MKT-Fanpage</strong>
+          <small>Hiện tại: tải file từ app, sau đó mở đúng thư mục để đưa lên Drive.</small>
+        </div>
+        <div class="drive-panel-actions">
+          <a class="button secondary" href="https://drive.google.com/drive/folders/1y44st73bJwtvZSlGUCBPYEKoGUt0jlHu" target="_blank" rel="noopener noreferrer">Mở Posters</a>
+          <a class="button secondary" href="https://drive.google.com/drive/folders/14yGvO8UDvykKK2M4juq8NFewn_LYx3HJ" target="_blank" rel="noopener noreferrer">Mở Backups</a>
+          <a class="button secondary" href="https://drive.google.com/drive/folders/1_xPMNConYG_kq-OOKq8g2--IhCJfUl6g" target="_blank" rel="noopener noreferrer">Mở Exports</a>
+        </div>
+      </section>
+
+      <section class="stats-grid" id="dashboard" aria-label="Chỉ số tổng quan">
+        <article class="stat-card accent-navy">
+          <div class="stat-label">Tổng số group</div>
+          <div class="stat-value" id="totalGroups">0</div>
+          <div class="stat-note">Trong danh mục hiện tại</div>
+        </article>
+        <article class="stat-card accent-green">
+          <div class="stat-label">Sẵn sàng đăng</div>
+          <div class="stat-value" id="readyGroups">0</div>
+          <div class="stat-note" id="readyRate">0% tổng danh mục</div>
+        </article>
+        <article class="stat-card accent-yellow">
+          <div class="stat-label">Đang test / chờ duyệt</div>
+          <div class="stat-value" id="pendingGroups">0</div>
+          <div class="stat-note">Cần theo dõi kết quả</div>
+        </article>
+        <article class="stat-card accent-red">
+          <div class="stat-label">Cần xử lý</div>
+          <div class="stat-value" id="attentionGroups">0</div>
+          <div class="stat-note">Bị từ chối hoặc thiếu dữ liệu</div>
+        </article>
+      </section>
+
+      <section class="batch-prep-panel" id="batch-prep" aria-label="Chuẩn bị lô đăng bài">
+        <div class="workspace-heading batch-prep-heading">
+          <div>
+            <p class="eyebrow">CHẠY THEO LÔ · BƯỚC 1</p>
+            <h2>Chuẩn bị lô đăng bài</h2>
+            <p>Chọn nội dung và xem nhanh phạm vi group. Bước này chưa tạo hàng đợi và chưa đăng bài.</p>
+          </div>
+          <span class="batch-step-badge">Chưa chạy</span>
+        </div>
+        <div class="batch-prep-grid">
+          <label class="batch-prep-card batch-prep-select">
+            <span>Nội dung sẽ dùng</span>
+            <select id="batchContentSelect" size="4" aria-label="Nội dung sẽ dùng" aria-describedby="batchContentStatus"></select>
+            <div class="batch-content-preview" id="batchContentPreview" aria-live="polite"></div>
+            <div class="batch-content-posting-summary" id="batchContentPostingSummary" aria-live="polite"></div>
+            <small id="batchContentStatus">Chỉ chọn được nội dung đã duyệt. Có thể cuộn danh sách nếu có nhiều bài.</small>
+          </label>
+          <div class="batch-prep-card batch-topic-picker-card">
+            <span id="batchGroupSelectionLabel">Cách chọn group</span>
+            <select id="batchGroupSelectionMode" aria-label="Cách chọn group trong lô">
+              <option value="topic">Theo chủ đề nội dung</option>
+              <option value="registry">Theo lô đã đăng ký</option>
+            </select>
+            <div id="batchTopicPicker" class="batch-topic-picker" role="group" aria-label="Chọn một hoặc nhiều chủ đề group"></div>
+            <small id="batchTopicNote">Mặc định theo chủ đề của bài. Có thể tích thêm nhiều chủ đề group.</small>
+            <div id="batchRegistrySelect" class="batch-registry-picker is-hidden" role="group" aria-label="Chọn một hoặc nhiều lô group đã đăng ký"></div>
+            <small id="batchRegistrySelectNote" class="is-hidden">Tích một hoặc nhiều lô để nạp toàn bộ group.</small>
+          </div>
+          <div class="batch-prep-summary">
+            <div class="batch-prep-card batch-mode-card">
+              <span>Loại dữ liệu của lô</span>
+              <div class="batch-mode-options" id="batchModeOptions" role="group" aria-label="Loại dữ liệu của lô">
+                <label><input type="checkbox" data-batch-mode value="real"><span>Thực tế</span></label>
+                <label><input type="checkbox" data-batch-mode value="simulation"><span>Giả lập</span></label>
+              </div>
+              <small id="batchModeNote">Chọn loại lô trước khi nhập số liệu.</small>
+            </div>
+            <div class="batch-prep-card batch-scope-card">
+              <span>Phạm vi hiện tại</span>
+              <strong id="batchScopeLabel">Chưa chọn nội dung</strong>
+              <small id="batchScopeNote">App sẽ lọc group theo chủ đề đã chọn.</small>
+            </div>
+            <div class="batch-prep-card batch-prep-counts" id="batchPrepCounts">
+              <div><span>Group chưa có trong lô</span><strong id="batchMatchCount">0</strong></div>
+              <div><span>Đã loại khỏi lô</span><strong id="batchExcludedCount">0</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="batch-step-actions">
+          <span id="batchPrepMessage">Anh kiểm tra nội dung và phạm vi trước.</span>
+          <button type="button" class="button primary" id="batchPrepNextButton">Kiểm tra group phù hợp →</button>
+        </div>
+      </section>
+
+      <section class="batch-registry-panel" id="batch-registry" aria-label="Đăng ký lô group">
+        <div class="workspace-heading batch-registry-heading">
+          <div>
+            <p class="eyebrow">CHẠY THEO LÔ · BƯỚC 0</p>
+            <h2>Đăng ký lô group</h2>
+            <p>Lưu sẵn một danh sách group, kể cả group thuộc nhiều chủ đề. Sau đó chọn lại lô này ở Bước 1.</p>
+          </div>
+          <span class="batch-step-badge">Lưu để dùng lại</span>
+        </div>
+        <div class="batch-registry-layout">
+          <form class="batch-registry-form" id="batchRegistryForm">
+            <div class="batch-registry-form-heading batch-registry-form-heading-with-action">
+              <div>
+                <strong id="batchRegistryFormTitle">Đăng ký fanpage / lô group</strong>
+                <small id="batchRegistryFormNote">Chọn fanpage để lưu riêng hoặc chọn các group muốn đi cùng nhau trong một lô.</small>
+              </div>
+              <button type="submit" class="button primary" id="batchRegistrySaveButton">Lưu đăng ký lô</button>
+            </div>
+            <label><span>Tên lô / tên fanpage</span><input id="batchRegistryName" type="text" maxlength="100" placeholder="Có thể để trống nếu đã nhập tên fanpage"></label>
+            <label><span>Ghi chú</span><textarea id="batchRegistryDescription" rows="3" maxlength="240" placeholder="Ví dụ: Dùng cho các bài thời sự trong ngày"></textarea></label>
+            <div class="batch-registry-fanpage-fields">
+              <label><span>Chọn fanpage <small>(có thể lưu riêng, không cần chọn group)</small></span><input id="batchRegistryFanpageName" type="text" maxlength="120" placeholder="Ví dụ: Vài Phút Tin Tức"></label>
+              <label><span>Link fanpage <small>(không bắt buộc)</small></span><input id="batchRegistryFanpageUrl" type="text" maxlength="500" placeholder="facebook.com/..." inputmode="url"></label>
+            </div>
+            <div class="batch-registry-picker-head">
+              <div><strong>Chọn group</strong><small id="batchRegistrySelectedCount">0 group đã chọn</small></div>
+              <div class="batch-registry-picker-tools">
+                <label class="batch-registry-membership-filter"><span>Tình trạng lô</span><select id="batchRegistryMembershipFilter">
+                  <option value="all">Tất cả group</option>
+                  <option value="unregistered">Chưa thuộc lô nào</option>
+                  <option value="registered">Đã thuộc ít nhất một lô</option>
+                  <option value="selected">Đang được chọn cho lô này</option>
+                  <option value="unselected">Chưa được chọn cho lô này</option>
+                  <option value="editing" disabled>Chỉ group trong lô đang sửa</option>
+                  <option value="not-queued">Chưa có trong hàng đợi nào</option>
+                </select></label>
+                <label class="batch-registry-search"><span>Tìm group</span><input id="batchRegistryGroupSearch" type="search" placeholder="Tìm tên group..."></label>
+              </div>
+            </div>
+            <label class="batch-registry-select-all"><input id="batchRegistrySelectAll" type="checkbox"><span>Chọn tất cả group đang hiển thị</span></label>
+            <div class="batch-registry-group-list" id="batchRegistryGroupList"></div>
+            <p class="form-error" id="batchRegistryMessage" role="alert"></p>
+          </form>
+          <div class="batch-registry-saved">
+            <div class="batch-registry-form-heading batch-registry-form-heading-with-action">
+              <div>
+                <strong>Lô đã đăng ký</strong>
+                <small>Chọn một lô để nạp danh sách group vào Bước 1.</small>
+              </div>
+              <button type="button" class="button secondary" id="batchRegistryCancelEditButton" hidden>Hủy sửa</button>
+            </div>
+            <div class="batch-registry-list" id="batchRegistryList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="batch-schedule-panel" id="batch-schedule" aria-label="Lập lịch đăng theo lô">
+        <div class="workspace-heading batch-schedule-heading">
+          <div>
+            <p class="eyebrow">CHẠY THEO LÔ · BƯỚC 0.5</p>
+            <h2>Lập lịch đăng theo lô</h2>
+            <p>Đặt giờ nhắc đăng bài cho từng lô trong khung 06:00–21:00. Đây chỉ là lịch nhắc để anh chủ động thao tác.</p>
+          </div>
+          <span class="batch-step-badge">Có thể chỉnh lại</span>
+        </div>
+        <div class="batch-schedule-content">
+          <div class="batch-schedule-toolbar">
+            <label><span>Bắt đầu</span><input id="batchScheduleStartTime" type="time" value="06:00"></label>
+            <label><span>Kết thúc</span><input id="batchScheduleEndTime" type="time" value="21:00"></label>
+            <button type="button" class="button secondary" id="batchScheduleProposalButton">Đề xuất giờ nhắc</button>
+            <button type="button" class="button primary" id="batchScheduleSaveButton">Lưu lịch</button>
+            <div class="batch-schedule-summary" id="batchScheduleSummary" role="status" aria-live="polite"></div>
+          </div>
+          <div class="batch-schedule-list-shell" aria-label="Danh sách lô đăng">
+            <div class="batch-schedule-list" id="batchScheduleList"></div>
+            <div class="batch-schedule-scroll-controls" aria-label="Điều khiển mở và thu gọn danh sách lô">
+              <button type="button" class="batch-schedule-scroll-button" id="batchScheduleScrollUpButton" aria-label="Thu gọn danh sách lô" title="Thu gọn">↑</button>
+              <span class="batch-schedule-scroll-position" id="batchScheduleScrollPosition" role="status" aria-live="polite">Đang thu gọn</span>
+              <button type="button" class="batch-schedule-scroll-button" id="batchScheduleScrollDownButton" aria-label="Mở rộng danh sách lô" title="Mở rộng">↓</button>
+            </div>
+          </div>
+          <p class="batch-schedule-note" id="batchScheduleNote">Mỗi lô có một giờ riêng; lô mới thêm sẽ tự xuất hiện để anh đặt giờ.</p>
+        </div>
+      </section>
+
+      <section class="content-library" id="content-library" aria-label="Thư viện nội dung">
+        <div class="workspace-heading content-heading">
+          <div>
+            <p class="eyebrow">THƯ VIỆN NỘI DUNG</p>
+            <h2>Thư viện nội dung</h2>
+            <p>Lưu nội dung đã nghiên cứu, sau đó ghép vào đúng nhóm trước khi tạo hàng đợi đăng.</p>
+          </div>
+          <div class="content-heading-actions">
+            <span id="contentSyncStatus" class="sync-status" role="status" aria-live="polite">Đang ở bản trình duyệt</span>
+            <span id="contentRetentionStatus" class="retention-status" role="status" aria-live="polite">Giữ 2 ngày gần nhất</span>
+            <button type="button" class="button secondary" id="syncContentsButton">Đồng bộ nội dung</button>
+            <button type="button" class="button secondary" id="openContentRetentionButton">Dọn nội dung cũ</button>
+            <button type="button" class="button secondary" id="openBriefButton">Tạo brief AI</button>
+            <button type="button" class="button primary" id="addContentButton">+ Thêm nội dung</button>
+          </div>
+        </div>
+        <div class="content-summary">
+          <article class="content-stat"><span>Tổng nội dung</span><strong id="totalContent">0</strong><small>Giữ bản cục bộ và bản online</small></article>
+          <article class="content-stat"><span>Bản nháp</span><strong id="draftContent">0</strong><small>Chưa sẵn sàng điều phối</small></article>
+          <article class="content-stat"><span>Đã duyệt</span><strong id="approvedContent">0</strong><small>Có thể ghép vào group</small></article>
+        </div>
+        <div class="content-layout">
+          <div class="content-list" id="contentCards"></div>
+          <aside class="matching-panel" id="matchingPanel" aria-live="polite">
+            <div class="matching-empty"><span aria-hidden="true">↗</span><strong>Chọn một nội dung</strong><p>App sẽ tìm các group cùng chủ đề và loại bỏ group đã tạm dừng hoặc bị từ chối.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="batch-queue-panel" id="batch-queue-draft" aria-label="Tạo hàng đợi nháp theo lô">
+        <div class="workspace-heading batch-queue-heading">
+          <div>
+            <p class="eyebrow">CHẠY THEO LÔ · BƯỚC 3</p>
+            <h2>Tạo hàng đợi nháp</h2>
+            <p>Dùng đúng danh sách group anh đã xác nhận ở bước 2. Bước này chỉ lưu hàng đợi nháp, chưa đăng bài.</p>
+          </div>
+          <span class="batch-step-badge">Chưa chạy</span>
+        </div>
+        <div class="batch-queue-grid">
+          <div class="batch-prep-card">
+            <span>Nội dung đã chọn</span>
+            <strong id="batchQueueContentLabel">Chưa có danh sách</strong>
+            <small id="batchQueueContentNote">Hãy hoàn tất bước 2 trước.</small>
+            <div class="batch-queue-fanpage-summary" id="batchQueueFanpageSummary" aria-live="polite"><span class="batch-queue-fanpage-empty">Chưa có fanpage được xác nhận ở bước 2.</span></div>
+          </div>
+          <div class="batch-prep-card batch-prep-counts">
+            <div><span>Group sẽ thêm</span><strong id="batchQueueNewCount">0</strong></div>
+            <div><span>Đã có trong hàng đợi</span><strong id="batchQueueExistingCount">0</strong></div>
+          </div>
+        </div>
+        <div class="batch-step-actions">
+          <span id="batchQueueMessage">Chưa có danh sách group đã xác nhận.</span>
+          <button type="button" class="button primary" id="createBatchQueueButton" disabled>Tạo hàng đợi nháp</button>
+        </div>
+      </section>
+
+      <section class="batch-review-panel" id="batch-review-queue" aria-label="Rà soát hàng đợi trước khi đăng">
+        <div class="workspace-heading batch-review-heading">
+          <div>
+            <p class="eyebrow">CHẠY THEO LÔ · BƯỚC 4</p>
+            <h2>Rà soát hàng đợi trước khi đăng</h2>
+            <p>Kiểm tra lần cuối nội dung, poster và group. App chưa tự đăng lên Facebook ở bước này.</p>
+          </div>
+          <span class="batch-step-badge">Chưa chạy</span>
+        </div>
+        <div class="batch-review-grid">
+          <div class="batch-prep-card"><span>Group trong lô</span><strong id="batchReviewQueueCount">0</strong><small id="batchReviewQueueNote">Chưa có hàng đợi cho danh sách đã chọn.</small></div>
+          <div class="batch-prep-card"><span>Đã sẵn sàng sao chép</span><strong id="batchReviewReadyCount">0</strong><small>Caption và poster có thể lấy từ Hàng đợi đăng bài.</small></div>
+          <div class="batch-prep-card"><span>Cần chú ý</span><strong id="batchReviewAttentionCount">0</strong><small id="batchReviewAttentionNote">Không có cảnh báo.</small></div>
+        </div>
+        <div class="batch-step-actions">
+          <span id="batchReviewQueueMessage">Hãy rà soát trước khi mở từng group.</span>
+          <button type="button" class="button primary" id="openPostingQueueButton">Mở hàng đợi đăng bài →</button>
+        </div>
+      </section>
+
+      <section class="batch-status-panel" id="batch-status-tracking" aria-label="Theo dõi trạng thái duyệt theo lô">
+        <div class="workspace-heading batch-status-heading">
+          <div>
+            <p class="eyebrow">CHẠY THEO LÔ · BƯỚC 5</p>
+            <h2>Theo dõi trạng thái duyệt</h2>
+            <p>Cập nhật kết quả sau khi đăng để biết group nào cần chờ, kiểm tra lại hoặc loại khỏi lô sau này.</p>
+          </div>
+          <span class="batch-step-badge">Chưa chạy</span>
+        </div>
+        <div class="batch-status-grid">
+          <div class="batch-prep-card"><span>Đã đăng</span><strong id="batchStatusSentCount">0</strong><small>Đã đăng nhưng chưa có kết quả duyệt.</small></div>
+          <div class="batch-prep-card"><span>Chờ duyệt</span><strong id="batchStatusPendingCount">0</strong><small>Đang chờ quản trị viên group xét duyệt.</small></div>
+          <div class="batch-prep-card"><span>Đã duyệt</span><strong id="batchStatusApprovedCount">0</strong><small>Đã được duyệt và có thể theo dõi số liệu.</small></div>
+          <div class="batch-prep-card"><span>Cần xử lý</span><strong id="batchStatusAttentionCount">0</strong><small id="batchStatusAttentionNote">Bị từ chối hoặc có lỗi.</small></div>
+        </div>
+        <div class="batch-step-actions">
+          <span id="batchStatusMessage">Hãy cập nhật trạng thái từng group trong Hàng đợi đăng bài.</span>
+          <button type="button" class="button secondary" id="downloadBatchMetricsTemplateButton">Tải mẫu số liệu cho lô này</button>
+          <button type="button" class="button primary" id="openBatchStatusQueueButton">Mở mục cần cập nhật →</button>
+        </div>
+      </section>
+
+      <section class="queue-panel" id="posting-queue" aria-label="Hàng đợi đăng bài">
+        <div class="workspace-heading queue-heading">
+          <div>
+            <p class="eyebrow">BƯỚC 4 · POSTING QUEUE</p>
+            <h2>Hàng đợi đăng bài</h2>
+            <p>Kiểm tra từng group, sao chép nội dung và cập nhật kết quả đăng. Có thể nhập nhiều số liệu bằng CSV.</p>
+            <div id="queueModeGuard" class="queue-mode-guard" role="status" aria-live="polite"></div>
+            <div id="queuePreflight" class="queue-preflight" role="status" aria-live="polite"></div>
+          </div>
+          <div class="queue-heading-actions">
+            <span id="queueSyncStatus" class="sync-status queue-sync-status" role="status" aria-live="polite">Hàng đợi: đang ở bản trình duyệt</span>
+            <button type="button" class="button secondary" id="syncQueueButton">Đồng bộ hàng đợi</button>
+            <button type="button" class="button danger" id="resetQueueOnlyButton" title="Xóa riêng hàng đợi và lô đang chạy hiện tại, giữ nguyên nội dung, group và fanpage">Bỏ hàng đợi lỗi</button>
+            <label class="posting-run-scope-wrap"><span>Lô đăng</span><select id="postingBatchScope" aria-label="Chọn lô đăng"><option value="all">Tất cả lô đang chờ</option></select></label>
+            <label class="posting-run-scope-wrap"><span>Cách chạy</span><select id="postingRunStrategy" aria-label="Cách chạy hàng đợi"><option value="batch">Đăng toàn bộ lô đã chọn</option><option value="all">Hết lô này đến lô khác</option><option value="chunk">Cụm 10 group (phụ)</option></select></label>
+            <div class="posting-run-label-wrap">
+              <input id="postingRunLabel" class="posting-run-label-input" type="text" maxlength="80" placeholder="Tên lô (tùy chọn)" aria-label="Tên lô (tùy chọn)">
+              <div id="postingTopicNote" class="posting-topic-note" aria-label="Bảng mã chủ đề để kiểm tra"></div>
+            </div>
+            <button type="button" class="button primary" id="startPostingRunButton">Bắt đầu cụm 10 group</button>
+            <button type="button" class="button primary" id="markAllQueueApprovedButton" title="Đánh dấu đã duyệt cho các mục có trạng thái Đã đăng đang hiển thị">Duyệt tất cả mục đã đăng</button>
+            <button type="button" class="button secondary" id="downloadMetricsTemplateButton">Tải mẫu theo bộ lọc</button>
+            <button type="button" class="button secondary" id="importMetricsButton">Nhập số liệu CSV</button>
+            <input type="file" id="metricsFileInput" accept=".csv,text/csv" hidden>
+            <label class="queue-filter"><span class="sr-only">Lọc hàng đợi</span><select id="queueFilter"><option value="all">Toàn bộ hàng đợi</option><option value="batch">Lô hiện tại</option><option value="history">Lô đang xem lại</option><option value="simulation">Chỉ lô Giả lập</option><option value="real">Chỉ lô Thực tế</option><option value="due">Cần kiểm tra</option><option value="missing">Chưa có số liệu</option><option value="pending">Chờ duyệt</option><option value="sent">Đã đăng</option><option value="draft">Chưa đăng</option><option value="approved">Đã duyệt</option><option value="rejected">Bị từ chối</option><option value="skipped">Đã bỏ qua</option></select></label>
+            <div class="view-summary"><strong id="queueCount">0</strong><span>mục trong hàng đợi</span></div>
+          </div>
+        </div>
+        <div class="daily-posting-control" id="dailyPostingControl" role="status" aria-live="polite"></div>
+        <div class="queue-summary" id="queueSummary"></div>
+        <div class="queue-guidance" id="queueGuidance" role="status"></div>
+        <div id="postingRunPanel" class="posting-run" hidden></div>
+        <div class="queue-list" id="queueList"></div>
+        <div id="postingRunHistory" class="posting-run-history" hidden></div>
+      </section>
+
+      <section class="analytics-panel" id="analytics" aria-label="Phân tích hiệu quả">
+        <div class="workspace-heading analytics-heading">
+          <div>
+            <p class="eyebrow">BƯỚC 5 · PERFORMANCE</p>
+            <h2>Phân tích hiệu quả</h2>
+            <p>So sánh group và chủ đề dựa trên số liệu anh nhập từ Facebook.</p>
+          </div>
+          <div class="analytics-actions">
+            <label><span class="sr-only">Lọc báo cáo theo lô</span><select id="analyticsBatchFilter"><option value="all">Tất cả lô</option><option value="batch">Lô hiện tại</option></select></label>
+            <label><span class="sr-only">Lọc báo cáo theo loại lô</span><select id="analyticsModeFilter"><option value="all">Tất cả loại lô</option></select></label>
+            <label><span class="sr-only">Lọc báo cáo theo chủ đề</span><select id="analyticsTopicFilter"><option value="all">Tất cả chủ đề</option></select></label>
+            <label><span class="sr-only">Lọc báo cáo theo trạng thái</span><select id="analyticsStatusFilter"><option value="all">Tất cả trạng thái</option></select></label>
+            <button type="button" class="button secondary" id="exportAnalyticsButton">Xuất báo cáo CSV</button>
+          </div>
+        </div>
+        <div class="analytics-summary" id="analyticsSummary"></div>
+        <div class="analytics-layout">
+          <div class="analytics-card">
+            <div class="analytics-card-heading"><div><h3>Xếp hạng group</h3><p>Ưu tiên theo lượt xem, sau đó xét tương tác.</p></div></div>
+            <div class="analytics-table-wrap" id="groupAnalyticsTable"></div>
+          </div>
+          <aside class="analytics-card analytics-insights">
+            <div class="analytics-card-heading"><div><h3>Kết luận nhanh</h3><p>Gợi ý cho lượt đăng tiếp theo.</p></div></div>
+            <div id="analyticsInsights"></div>
+            <div class="analytics-next-batch" id="analyticsNextBatch"></div>
+          </aside>
+        </div>
+        <div class="analytics-card analytics-decision-card" id="batch-decisions">
+          <div class="analytics-card-heading"><div><h3>Chốt quyết định cho lô tiếp theo</h3><p>Lưu kế hoạch vận hành cho từng group. App chỉ đổi trạng thái sau khi anh bấm áp dụng.</p></div><div class="analytics-decision-actions"><button type="button" class="button secondary" id="inheritSimulationButton">Kế thừa sang lô thực tế</button><button type="button" class="button secondary" id="prepareBatchFromDecisionsButton">Chuẩn bị lô theo quyết định</button><button type="button" class="button secondary" id="applyBatchDecisionsButton">Áp dụng ưu tiên/tạm dừng</button><button type="button" class="button primary" id="saveBatchDecisionsButton">Lưu quyết định</button></div></div>
+          <details class="batch-decision-details" id="batchDecisionDetails" open>
+            <summary class="batch-decision-summary"><span><strong>Danh sách group và quyết định</strong><small id="batchDecisionSummaryCount">Đang tải...</small></span><span class="batch-decision-chevron" aria-hidden="true">▾</span></summary>
+            <div class="batch-decision-list" id="batchDecisionList"></div>
+          </details>
+        </div>
+        <div class="analytics-card analytics-topics-card">
+          <div class="analytics-card-heading"><div><h3>So sánh theo chủ đề</h3><p>Chỉ hiển thị chủ đề đã có số liệu.</p></div></div>
+          <div class="analytics-table-wrap" id="topicAnalyticsTable"></div>
+        </div>
+        <div class="analytics-card analytics-growth-card">
+          <div class="analytics-card-heading"><div><h3>Tăng trưởng giữa các mốc</h3><p>So sánh mốc 2–4 giờ với mốc 24 giờ đã lưu.</p></div></div>
+          <div class="analytics-table-wrap" id="analyticsGrowthTable"></div>
+        </div>
+      </section>
+
+      <section class="audit-panel" id="audit-log" aria-label="Nhật ký thao tác">
+        <div class="workspace-heading audit-heading">
+          <div>
+            <p class="eyebrow">BƯỚC 6 · OPERATION LOG</p>
+            <h2>Nhật ký thao tác</h2>
+            <p>Ghi lại các thay đổi quan trọng trong trình duyệt này để dễ kiểm tra và bàn giao.</p>
+          </div>
+            <div class="audit-heading-actions"><span id="auditSyncStatus" class="sync-status" role="status" aria-live="polite">Nhật ký: đang ở bản trình duyệt</span><button type="button" class="button secondary" id="exportAuditButton">Xuất nhật ký CSV</button></div>
+        </div>
+        <details class="audit-history" id="auditHistory">
+          <summary class="audit-history-summary"><span><strong>Danh sách nhật ký</strong><small id="auditHistorySummaryCount">Đang tải...</small></span><span class="audit-history-chevron" aria-hidden="true">▾</span></summary>
+          <div class="audit-list" id="auditList"></div>
+        </details>
+      </section>
+
+      <section class="routing-panel" id="routing" aria-label="Phân loại và điều phối">
+        <div class="workspace-heading routing-heading">
+          <div>
+            <p class="eyebrow">BƯỚC 2 · ROUTING</p>
+            <h2>Phân loại &amp; điều phối</h2>
+            <p>Nhìn nhanh group nào đã đủ dữ liệu để nhận nội dung, group nào cần rà lại.</p>
+          </div>
+          <button type="button" class="button secondary" id="routeAllButton">Xem group cần xử lý</button>
+        </div>
+        <div class="routing-summary">
+          <article class="route-card route-ready"><span>Đủ dữ liệu điều phối</span><strong id="routableGroups">0</strong><small>Có chủ đề và tệp người xem</small></article>
+          <article class="route-card route-test"><span>Cần tiếp tục test</span><strong id="testGroups">0</strong><small>Đang test hoặc chờ duyệt</small></article>
+          <article class="route-card route-missing"><span>Cần bổ sung phân loại</span><strong id="unclassifiedGroups">0</strong><small>Thiếu chủ đề hoặc tệp người xem</small></article>
+        </div>
+        <div class="topic-grid" id="topicCards"></div>
+      </section>
+
+      <section class="workspace" id="groups">
+        <div class="workspace-heading">
+          <div>
+            <h2>Danh sách group</h2>
+            <p>Tìm kiếm, phân loại và cập nhật trạng thái trong một nơi.</p>
+          </div>
+          <div class="view-summary"><strong id="visibleCount">0</strong><span>group đang hiển thị</span></div>
+        </div>
+
+        <div class="toolbar">
+          <label class="search-field">
+            <span class="sr-only">Tìm group</span>
+            <span aria-hidden="true">⌕</span>
+            <input type="search" id="searchInput" placeholder="Tìm theo tên, chủ đề, tệp người xem...">
+          </label>
+          <label>
+            <span class="sr-only">Lọc chủ đề</span>
+            <select id="topicFilter"><option value="all">Tất cả chủ đề</option></select>
+          </label>
+          <label>
+            <span class="sr-only">Lọc trạng thái</span>
+            <select id="statusFilter">
+              <option value="all">Tất cả trạng thái</option>
+              <option value="ready">Sẵn sàng</option>
+              <option value="testing">Đang test</option>
+              <option value="pending">Chờ duyệt</option>
+              <option value="rejected">Bị từ chối</option>
+              <option value="inactive">Tạm dừng</option>
+            </select>
+          </label>
+          <label>
+            <span class="sr-only">Lọc theo lô</span>
+            <select id="batchMembershipFilter">
+              <option value="all">Tất cả tình trạng lô</option>
+              <option value="unregistered">Chưa thuộc lô đăng ký nào</option>
+              <option value="registered">Đã thuộc ít nhất một lô</option>
+              <option value="not-queued">Chưa có trong hàng đợi nào</option>
+              <option value="not-current">Chưa có trong lô đang chọn</option>
+            </select>
+          </label>
+          <button type="button" class="button text-button" id="clearFilters">Xóa bộ lọc</button>
+          <button type="button" class="button secondary" id="scanDuplicateGroupsButton">Quét group trùng</button>
+          <button type="button" class="button secondary" id="syncGroupsButton">Đồng bộ group lên Supabase</button>
+          <button type="button" class="button secondary" id="restoreDeletedGroupsButton">Khôi phục group đã xóa</button>
+          <span class="sync-status" id="syncGroupsStatus" role="status" aria-live="polite">Chưa đồng bộ</span>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Group</th>
+                <th>Chủ đề</th>
+                <th>Tệp người xem</th>
+                <th>Trạng thái</th>
+                <th>Tỷ lệ duyệt</th>
+                <th>Cập nhật</th>
+                <th><span class="sr-only">Thao tác</span></th>
+              </tr>
+            </thead>
+            <tbody id="groupRows"></tbody>
+          </table>
+          <div class="empty-state" id="emptyState" hidden>
+            <div aria-hidden="true">◎</div>
+            <h3>Không tìm thấy group phù hợp</h3>
+            <p>Thử đổi từ khóa hoặc xóa bộ lọc hiện tại.</p>
+          </div>
+        </div>
+
+        <div class="table-footer">
+          <span>Dữ liệu tự lưu sau mỗi thay đổi.</span>
+          <button type="button" class="danger-link" id="resetButton">Khôi phục dữ liệu mẫu</button>
+        </div>
+      </section>
+
+      <section class="next-stage" aria-label="Bước tiếp theo của sản phẩm">
+        <div><span>Tiếp theo</span><h2>Content Library → Matching → Posting Queue</h2></div>
+        <p>Chỉ mở rộng sau khi danh mục group được làm sạch và kiểm chứng trong vận hành thực tế.</p>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="groupDialog">
+    <form method="dialog" id="groupForm">
+      <div class="dialog-header">
+        <div><p class="eyebrow">GROUP REGISTRY</p><h2 id="dialogTitle">Thêm group mới</h2></div>
+        <button type="button" class="icon-button" id="closeDialog" aria-label="Đóng">×</button>
+      </div>
+      <div class="form-grid">
+        <label class="full-field">Tên group <input name="name" required maxlength="120" placeholder="Ví dụ: Tin tức Hà Nội"></label>
+        <label class="full-field">Link group <input name="url" required type="url" placeholder="https://facebook.com/groups/..."></label>
+        <label>Chủ đề (có thể đổi sau khi test) <input name="topic" required list="topicSuggestions" placeholder="Tin tức"></label>
+        <label>Tệp người xem <input name="audience" required placeholder="25–44, quan tâm thời sự"></label>
+        <label>Trạng thái
+          <select name="status" required>
+            <option value="testing">Đang test</option>
+            <option value="ready">Sẵn sàng</option>
+            <option value="pending">Chờ duyệt</option>
+            <option value="rejected">Bị từ chối</option>
+            <option value="inactive">Tạm dừng</option>
+          </select>
+        </label>
+        <label>Tỷ lệ duyệt (%) <input name="approvalRate" type="number" min="0" max="100" step="1" value="0"></label>
+        <label class="full-field">Ghi chú <textarea name="notes" rows="3" maxlength="500" placeholder="Quy định đăng bài, khung giờ tốt, lý do cần theo dõi..."></textarea></label>
+      </div>
+      <p class="form-error" id="formError" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button type="button" class="button secondary" id="cancelDialog">Hủy</button>
+        <button type="submit" class="button primary">Lưu group</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="deletedGroupsDialog">
+    <div class="dialog-panel" id="deletedGroupsPanel">
+      <div class="dialog-header">
+        <div><p class="eyebrow">GROUP REGISTRY</p><h2>Group đã xóa mềm</h2></div>
+        <button type="button" class="icon-button" id="closeDeletedGroupsDialog" aria-label="Đóng">×</button>
+      </div>
+      <p class="form-help">Group vẫn còn trong hệ thống và có thể khôi phục. Không có thao tác xóa vĩnh viễn ở đây.</p>
+      <div class="archive-list" id="deletedGroupsList"></div>
+    </div>
+  </dialog>
+
+  <dialog id="duplicateGroupsDialog" class="duplicate-groups-dialog">
+    <div class="dialog-panel">
+      <div class="dialog-header">
+        <div><p class="eyebrow">GROUP REGISTRY</p><h2>Quét và xóa group trùng</h2></div>
+        <button type="button" class="icon-button" id="closeDuplicateGroupsDialog" aria-label="Đóng">×</button>
+      </div>
+      <p class="form-help" id="duplicateGroupsSummary">App sẽ giữ lại một bản chính trong mỗi cụm trùng. Anh kiểm tra và bỏ tích những bản chưa muốn xóa.</p>
+      <div class="duplicate-groups-list" id="duplicateGroupsList"></div>
+      <div class="dialog-actions duplicate-groups-actions">
+        <button type="button" class="button secondary" id="cancelDuplicateGroups">Hủy</button>
+        <button type="button" class="button danger" id="deleteSelectedDuplicateGroups" disabled>Xóa group đã chọn</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="contentDialog">
+    <form id="contentForm" novalidate>
+      <div class="dialog-header">
+        <div><p class="eyebrow">CONTENT LIBRARY</p><h2 id="contentDialogTitle">Thêm nội dung</h2></div>
+        <button type="button" class="icon-button" id="closeContentDialog" aria-label="Đóng">×</button>
+      </div>
+      <div class="form-grid">
+        <label class="full-field">Tiêu đề nội dung <input name="title" maxlength="160" placeholder="Ví dụ: Tin mới trong ngày tại Hà Nam"></label>
+        <label class="full-field">Nguồn / link nguồn <input name="sourceUrl" type="text" placeholder="https://... hoặc Tuổi Trẻ"></label>
+        <label>Chủ đề <input name="topic" list="topicSuggestions" placeholder="Tin tức"></label>
+        <label>Tệp người xem <input name="audience" placeholder="Trung niên, quan tâm thời sự"></label>
+        <label>Định dạng
+          <select name="format"><option value="post">Bài viết</option><option value="short">Bài ngắn</option><option value="poster">Bài + poster</option></select>
+        </label>
+        <label>Trạng thái
+          <select name="status"><option value="draft">Bản nháp</option><option value="approved">Đã duyệt</option></select>
+        </label>
+        <label class="full-field">Tóm tắt / nội dung nháp <textarea name="summary" rows="8" placeholder="Dán phần tóm tắt đã kiểm tra nguồn..."></textarea><small id="contentWordCount" class="form-help">0 / 1.500 từ</small></label>
+        <label class="full-field">CTA kéo follow fanpage <input name="cta" maxlength="180" placeholder="Theo dõi fanpage để cập nhật bản tin tiếp theo"></label>
+        <label class="full-field">Bình luận ghim <textarea name="pinnedComment" rows="4" maxlength="2000" placeholder="Nhập bình luận ghim để copy sau khi đăng bài..."></textarea><small class="form-help">Nội dung này được lưu cùng bài và có nút copy riêng trong hàng đợi đăng bài.</small></label>
+        <label class="full-field">Poster đính kèm <input name="posterFile" type="file" accept="image/png,image/jpeg,image/webp"></label>
+        <div class="poster-paste-tools full-field"><button type="button" class="button secondary" id="pastePosterButton">Dán poster từ clipboard</button><small>Hoặc bấm vào vùng xem trước rồi nhấn Ctrl+V / Cmd+V.</small></div>
+        <div class="poster-upload full-field" id="posterUploadPreview" tabindex="0" role="button" aria-label="Vùng dán poster"><span>Chưa có poster</span><button type="button" class="button secondary" id="clearPosterButton" hidden>Xóa poster</button></div>
+        <small class="form-help full-field">Poster gốc được lưu nguyên bản trong IndexedDB của trình duyệt này. Không nén, không tải lên Drive.</small>
+      </div>
+      <p class="form-error" id="contentFormError" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button type="button" class="button secondary" id="cancelContentDialog">Hủy</button>
+        <button type="submit" class="button primary" id="saveContentButton">Lưu nội dung</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="deleteContentDialog" class="delete-dialog">
+    <form id="deleteContentForm" class="delete-dialog-form">
+      <div class="dialog-header delete-dialog-header">
+        <div><p class="eyebrow">CONTENT LIBRARY</p><h2>Xóa nội dung</h2><p class="delete-dialog-subtitle">Xác nhận thao tác với bài đang chọn</p></div>
+        <button type="button" class="icon-button" id="closeDeleteContentDialog" aria-label="Đóng">×</button>
+      </div>
+      <div class="delete-dialog-body">
+        <span class="delete-dialog-icon" aria-hidden="true">!</span>
+        <div class="delete-dialog-copy">
+          <p id="deleteContentMessage" class="confirm-dialog-message"></p>
+          <p class="delete-dialog-note">Thao tác này không thể hoàn tác.</p>
+          <p id="deleteContentQueueWarning" class="form-help confirm-dialog-warning" hidden></p>
+        </div>
+      </div>
+      <div class="dialog-actions delete-dialog-actions">
+        <button type="button" class="button secondary" id="cancelDeleteContent">Hủy bỏ</button>
+        <button type="submit" class="button danger" id="confirmDeleteContent">Xác nhận</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="contentRetentionDialog" class="retention-dialog">
+    <div class="dialog-header">
+      <div><p class="eyebrow">CONTENT LIBRARY</p><h2>Dọn nội dung cũ</h2><p class="retention-dialog-subtitle">Giữ lại 2 ngày gần nhất để giảm dung lượng lưu trữ.</p></div>
+      <button type="button" class="icon-button" id="closeContentRetentionDialog" aria-label="Đóng">×</button>
+    </div>
+    <div class="retention-summary" id="contentRetentionSummary"></div>
+    <p class="form-help">Bài đang nằm trong lô hoặc hàng đợi sẽ được giữ lại. Lịch sử đăng chỉ giữ thông tin rút gọn để vẫn đối soát được.</p>
+    <div class="dialog-actions">
+      <button type="button" class="button secondary" id="cancelContentRetention">Hủy</button>
+      <button type="button" class="button danger" id="confirmContentRetention">Dọn nội dung cũ</button>
+    </div>
+  </dialog>
+
+  <dialog id="dailyPostingLimitDialog">
+    <form id="dailyPostingLimitForm">
+      <div class="dialog-header">
+        <div><p class="eyebrow">POSTING CONTROL</p><h2>Giới hạn lượt đăng trong ngày</h2></div>
+        <button type="button" class="icon-button" id="closeDailyPostingLimitDialog" aria-label="Đóng">×</button>
+      </div>
+      <p class="form-help">Chỉ lượt đã xác nhận “Đã đăng” hoặc “Đã đăng &amp; duyệt” mới tính. Bỏ qua không làm mất quota.</p>
+      <div class="form-grid">
+        <label class="full-field">Phạm vi áp dụng
+          <select id="dailyPostingLimitScope" name="scope"></select>
+        </label>
+        <label class="full-field">Tối đa lượt đăng / ngày
+          <input id="dailyPostingLimitValue" name="limit" type="number" min="0" step="1" inputmode="numeric" placeholder="0 = không giới hạn">
+        </label>
+      </div>
+      <p class="form-help" id="dailyPostingLimitScopeNote"></p>
+      <div class="dialog-actions">
+        <button type="button" class="button secondary" id="cancelDailyPostingLimit">Hủy</button>
+        <button type="submit" class="button primary">Lưu giới hạn</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="briefDialog">
+    <form method="dialog" id="briefForm">
+      <div class="dialog-header">
+        <div><p class="eyebrow">CONTENT BRIEF</p><h2>Tạo brief AI</h2></div>
+        <button type="button" class="icon-button" id="closeBriefDialog" aria-label="Đóng">×</button>
+      </div>
+      <p class="form-help brief-note">Tạo prompt cục bộ để anh copy sang ChatGPT. App không gọi API, không tự đăng Facebook và không thay thế bước kiểm tra nguồn.</p>
+      <div class="form-grid">
+        <label>Chủ đề <input name="topic" list="topicSuggestions" placeholder="Ví dụ: Tin tức"></label>
+        <label>Tệp người xem <input name="audience" placeholder="Ví dụ: Người quan tâm thời sự"></label>
+        <label class="full-field">Nguồn / link nguồn <input name="source" placeholder="https://... hoặc tên tờ báo"></label>
+        <label>Định dạng
+          <select name="format">
+            <option value="post">Bài viết Facebook</option>
+            <option value="short">Bài ngắn</option>
+            <option value="poster">Bài viết kèm poster</option>
+          </select>
+        </label>
+        <label class="full-field">Dữ kiện / tóm tắt gốc <textarea name="facts" rows="5" maxlength="4000" placeholder="Dán dữ kiện đã kiểm tra từ nguồn..."></textarea></label>
+        <label class="full-field">Yêu cầu thêm <textarea name="requirements" rows="3" maxlength="800" placeholder="Ví dụ: giọng trung tính, thêm CTA follow fanpage... hoặc để trống"></textarea></label>
+        <label class="full-field">Brief để copy <textarea id="briefOutput" name="briefOutput" rows="13" readonly></textarea></label>
+      </div>
+      <div class="dialog-actions">
+        <button type="button" class="button secondary" id="copyBriefButton">Copy brief</button>
+        <button type="button" class="button primary" id="closeBriefDialogAction">Đóng</button>
+      </div>
+    </form>
+  </dialog>
+
+  <datalist id="topicSuggestions">
+    <option value="Tin tức"></option><option value="Đời sống"></option><option value="Pháp luật"></option>
+    <option value="Thể thao"></option><option value="Giải trí"></option><option value="Kinh doanh"></option>
+    <option value="Địa phương"></option><option value="Công nghệ"></option>
+  </datalist>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js?v=content-performance-v227-20261108"></script>
+</body>
+</html>

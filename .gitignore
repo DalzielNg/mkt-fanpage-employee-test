@@ -1,0 +1,55 @@
+# Environment and secrets
+.env
+.env.local
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Dependencies
+node_modules/
+vendor/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Build and test output
+dist/
+!site/dist/
+!site/dist/**
+build/
+coverage/
+.next/
+.nuxt/
+*.log
+
+# Local tooling and operating-system files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Local data and exports
+data/
+tmp/
+temp/
+exports/
+mkt-fanpage-groups*.csv
+mkt-fanpage-groups*.xlsx
+
+# Employee test data and local secrets
+.env.staging
+.env.test
+demo-data/private/
+test-artifacts/
+.excluded-local/
+
+# Local generated outputs
+/Output/
+/outputs/
+/poster_outputs/
+/.artifact-node/

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mkt-fanpage.local/schemas/content-draft.schema.json",
+  "title": "MKT-Fanpage Agent Content Draft",
+  "description": "Đầu ra có cấu trúc của Agent biên tập trước khi lưu thành bản nháp.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_status",
+    "source_url",
+    "source_name",
+    "source_published_at",
+    "topic",
+    "audience",
+    "title",
+    "poster_title",
+    "caption",
+    "pinned_comment",
+    "verification_notes",
+    "warnings",
+    "confidence"
+  ],
+  "properties": {
+    "run_status": {
+      "type": "string",
+      "enum": ["ready_for_review", "needs_review", "blocked"],
+      "description": "Chỉ ready_for_review mới được tự lưu thành bản nháp hoàn chỉnh."
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri",
+      "maxLength": 2000
+    },
+    "source_name": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "source_published_at": {
+      "anyOf": [
+        { "type": "string", "format": "date-time" },
+        { "type": "null" }
+      ]
+    },
+    "topic": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "audience": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "description": "Dùng No Title nếu nguồn thật sự không có tiêu đề phù hợp; không chèn giá trị này vào caption."
+    },
+    "poster_title": {
+      "type": "string",
+      "maxLength": 700
+    },
+    "caption": {
+      "type": "string",
+      "maxLength": 8000
+    },
+    "pinned_comment": {
+      "type": "string",
+      "maxLength": 5000
+    },
+    "verification_notes": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "type": "string", "maxLength": 500 }
+    },
+    "warnings": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "type": "string", "maxLength": 500 }
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"]
+    }
+  }
+}

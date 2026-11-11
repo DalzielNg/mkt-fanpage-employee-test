@@ -1,0 +1,17 @@
+{
+  "run_status": "ready_for_review",
+  "source_url": "https://example.com/tin-tuc/bai-viet-mau",
+  "source_name": "example.com",
+  "source_published_at": "2026-10-17T08:30:00+07:00",
+  "topic": "Tin tức",
+  "audience": "Người quan tâm thời sự",
+  "title": "Bài viết mẫu phục vụ kiểm tra hợp đồng dữ liệu Agent",
+  "poster_title": "BÀI VIẾT MẪU PHỤC VỤ KIỂM TRA HỢP ĐỒNG DỮ LIỆU AGENT TRƯỚC KHI KẾT NỐI VỚI ỨNG DỤNG",
+  "caption": "Đây là nội dung giả lập chỉ dùng để kiểm tra cấu trúc dữ liệu.\n\nTheo: example.com",
+  "pinned_comment": "Đây là bình luận giả lập dùng để kiểm tra trường bình luận ghim.\n\nXem bài nguồn: https://example.com/tin-tuc/bai-viet-mau",
+  "verification_notes": [
+    "Dữ liệu trong tệp này là ví dụ kỹ thuật, không phải tin để xuất bản."
+  ],
+  "warnings": [],
+  "confidence": "high"
+}
